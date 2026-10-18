@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Flow | IRONPULSE Demo Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="d-head"><div class="wrap"><a class="d-logo" href="index.html"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#ffd835"/><rect x="6" y="13" width="20" height="6" rx="2" fill="#000"/><rect x="3" y="9" width="4" height="14" rx="2" fill="#000"/><rect x="25" y="9" width="4" height="14" rx="2" fill="#000"/></svg>IRON<b>PULSE</b> DOCS</a><nav class="d-nav"><a href="index.html">Overview</a><a href="about-demo.html">About This Demo</a><a href="website-tour.html">Website Tour</a><a href="booking-guide.html" class="on">Booking Flow</a><a href="admin-guide.html">Admin Panel</a></nav></div></header>
+<div class="wrap">
+<p class="crumb"><a href="index.html">Demo Documentation</a> / Booking Flow</p>
+<h1 class="doc-title">How a Customer Books a Free Trial</h1>
+<p class="doc-lead">Three steps, no app, no login. A customer fills a short form, gets a confirmation screen with a booking ID, and can see his booking any time from the My Booking panel on any page. Every booking also lands in the gym's admin panel instantly.</p>
+
+<h2>Step 1: the customer fills the trial form</h2>
+<p>On the <a href="https://badu10m-code.github.io/ironpulse-demo/contact.html">Contact page</a>, the form asks for four things: name, phone number, fitness goal and preferred time of day. That is the whole form: short enough that people actually finish it.</p>
+<figure class="shot tall"><img src="img/contact.jpg" alt="Trial booking form on the contact page"><figcaption>The trial form: name, phone, goal and preferred time</figcaption></figure>
+
+<h2>Step 2: confirmation screen</h2>
+<p>The moment the form is submitted, the customer sees a congratulations screen. It confirms the booking and shows a unique <b>booking ID</b> (like IP-DP0CIH), the chosen goal and the preferred time. The booking is now in the gym's admin panel.</p>
+<figure class="shot"><img src="img/congrats.jpg" alt="Booking confirmation congratulations screen"><figcaption>The confirmation screen: congratulations message with booking ID</figcaption></figure>
+
+<h2>Step 3: the My Booking panel</h2>
+<p>On every page of the website there is a yellow <b>My Booking</b> button at the bottom-right, with a small badge showing how many bookings the customer has. Opening it slides out a panel that lists his bookings: the booking ID, name, goal, preferred time and a <b>Confirmed</b> status. He can also cancel a booking from here, which removes it from the admin panel as well.</p>
+<figure class="shot"><img src="img/cart.jpg" alt="My Booking panel open over the contact page"><figcaption>My Booking panel: the customer's own booking, with cancel option</figcaption></figure>
+
+<div class="note"><b>For the gym:</b> every booking made this way appears immediately in the <a href="admin-guide.html">Admin Panel</a>, under Trial Bookings, with the same booking ID. Staff can call the customer from there with one tap on the booking's WhatsApp button. The green WhatsApp button stays on every page too, for customers who prefer to just chat.</div>
+
+<div class="next"><a href="admin-guide.html">Next: Admin Panel Guide →</a><a href="website-tour.html">← Website Tour</a></div>
+<footer class="d-foot"><span>IRONPULSE Gym: demo documentation for the owner.</span><span><a href="https://badu10m-code.github.io/ironpulse-demo/">Open the website ↗</a> · <a href="https://badu10m-code.github.io/ironpulse-demo/admin.html">Admin Panel ↗</a></span></footer>
+</div>
+</body>
+</html>
