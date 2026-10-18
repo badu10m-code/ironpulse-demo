@@ -63,8 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) form.addEventListener('submit', e => {
     e.preventDefault();
     const f = new FormData(form);
+    try {
+      const D = ipLoad();
+      D.bookings = D.bookings || [];
+      D.bookings.unshift({ name: f.get('name'), phone: f.get('phone'), goal: f.get('goal'), time: f.get('time'), date: new Date().toLocaleString('en-IN') });
+      ipSave(D);
+    } catch(err) {}
     const msg = `Hi IRONPULSE Gym! I want to book a free trial.%0AName: ${f.get('name')}%0APhone: ${f.get('phone')}%0AGoal: ${f.get('goal')}%0APreferred time: ${f.get('time')}`;
-    window.open(`https://wa.me/919822045678?text=${msg.replace(/ /g, '%20')}`, '_blank');
+    window.open(`https://wa.me/919242158621?text=${msg.replace(/ /g, '%20')}`, '_blank');
   });
 
   // BMI calculator
@@ -87,4 +93,26 @@ document.addEventListener('DOMContentLoaded', () => {
     out.style.display = 'block';
     out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
+
+  // demo-admin overrides: announcement banner, custom testimonials, timings
+  const D = ipLoad();
+  if (D.banner && D.banner.on && D.banner.text) {
+    const bar = document.createElement('div');
+    bar.className = 'promo-bar';
+    bar.textContent = D.banner.text;
+    document.body.prepend(bar);
+  }
+  const t1 = 'Mon to Sat: 5:30 AM \u2013 11:00 PM \u00a0|\u00a0 Sun: 7:00 AM \u2013 9:00 PM';
+  if (D.timings && D.timings.week) document.querySelectorAll('.loc-time').forEach(el => {
+    el.innerHTML = '<b>Timings</b>' + D.timings.week + ' \u00a0|\u00a0 ' + (D.timings.sun || '');
+  });
+  if (D.timings && D.timings.week) document.querySelectorAll('.foot-contact li span').forEach(el => {
+    if (el.innerHTML.includes('Mon\u2013Sat')) el.innerHTML = D.timings.week + '<br>' + (D.timings.sun || '');
+  });
+  const grids = Array.from(document.querySelectorAll('.tst-grid')).filter(g => g.querySelector('.stars'));
+  if (D.testimonials && D.testimonials.length && grids.length) {
+    grids.forEach(g => {
+      g.innerHTML = D.testimonials.map((t, i) => `<div class="tst-card rv in${' d'+(i%3)}"><span class="stars">${'\u2605'.repeat(t.stars||5)}${'\u2606'.repeat(5-(t.stars||5))}</span><p>${t.text}</p><div class="tst-who"><div class="av">${(t.name||'M').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div><div><b>${t.name}</b><small>${t.tag||'Member'}</small></div></div></div>`).join('');
+    });
+  }
 });

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRONPULSE Gym | Admin Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+<div class="admin-body">
+<aside class="admin-side">
+  <a class="logo" href="index.html"><svg class="logo-mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#ffd835"/><rect x="6" y="13" width="20" height="6" rx="2" fill="#000"/><rect x="3" y="9" width="4" height="14" rx="2" fill="#000"/><rect x="25" y="9" width="4" height="14" rx="2" fill="#000"/></svg>IRON<b>PULSE</b></a>
+  <nav class="admin-nav">
+    <button data-sec="dash" class="on">📊 Dashboard</button>
+    <button data-sec="bookings">📋 Trial Bookings</button>
+    <button data-sec="tst">💬 Testimonials</button>
+    <button data-sec="banner">📣 Announcement</button>
+    <button data-sec="timings">🕐 Timings</button>
+    <button data-sec="wa">✆ WhatsApp Blast</button>
+    <button data-sec="data">🗄 Data &amp; Reset</button>
+  </nav>
+</aside>
+<main class="admin-main">
+  <div class="admin-head">
+    <h1>Gym Admin</h1>
+    <a class="btn btn-o btn-sm" href="index.html" target="_blank">View Website ↗</a>
+  </div>
+  <div class="demo-note">DEMO ADMIN PANEL: no password needed. Everything you save here stays in this browser (localStorage), so the live site on this device reflects it instantly. Perfect for showing the owner how updates work.</div>
+
+  <section id="sec-dash">
+    <div class="a-grid" id="dashStats"></div>
+    <div class="a-card" style="margin-top:22px"><h3>Latest Trial Requests</h3><div id="dashRecent"></div></div>
+  </section>
+
+  <section id="sec-bookings" style="display:none">
+    <div class="a-card">
+      <h3>Add Booking Manually (walk-ins and phone calls)</h3>
+      <form class="a-form" id="bkForm">
+        <div><label>Name *</label><input id="bkName" required placeholder="Member name"></div>
+        <div><label>Phone *</label><input id="bkPhone" required placeholder="10-digit number"></div>
+        <div><label>Goal</label><select id="bkGoal"><option>Weight Loss</option><option>Muscle Building</option><option>Strength</option><option>General Fitness</option><option>Personal Training</option></select></div>
+        <div><label>Preferred Time</label><select id="bkTime"><option>Morning (6–10 AM)</option><option>Midday (10 AM–4 PM)</option><option>Evening (4–11 PM)</option></select></div>
+        <div class="full"><button class="btn btn-y btn-sm" type="submit">Save Booking</button></div>
+      </form>
+    </div>
+    <div class="a-card"><h3>All Trial Bookings</h3><div id="bkList"></div></div>
+  </section>
+
+  <section id="sec-tst" style="display:none">
+    <div class="a-card">
+      <h3>Add Testimonial (shows on the homepage, max 8)</h3>
+      <form class="a-form" id="tstForm">
+        <div><label>Member Name *</label><input id="tstName" required placeholder="e.g. Rohan Deshmukh"></div>
+        <div><label>Tag</label><input id="tstTag" placeholder="e.g. Member since 2024"></div>
+        <div class="full"><label>Review *</label><textarea id="tstText" required placeholder="What the member achieved and how the coaches helped..."></textarea></div>
+        <div class="full"><button class="btn btn-y btn-sm" type="submit">Save Testimonial</button></div>
+      </form>
+    </div>
+    <div class="a-card"><h3>Custom Testimonials (used when at least one exists)</h3><div id="tstList"></div></div>
+  </section>
+
+  <section id="sec-banner" style="display:none">
+    <div class="a-card">
+      <h3>Announcement Bar (yellow strip on top of every page)</h3>
+      <form class="a-form" id="bannerForm">
+        <div class="full"><label>Text</label><input id="bannerText" placeholder="e.g. Dussehra offer: 20% off quarterly memberships till 20 Oct"></div>
+        <div><label>Show on website</label><select id="bannerOn"><option value="1">Yes</option><option value="0">No</option></select></div>
+        <div class="full"><button class="btn btn-y btn-sm" type="submit">Save Announcement</button></div>
+      </form>
+    </div>
+  </section>
+
+  <section id="sec-timings" style="display:none">
+    <div class="a-card">
+      <h3>Branch Timings (overrides the locations and footer)</h3>
+      <form class="a-form" id="timeForm">
+        <div><label>Mon to Sat line</label><input id="timeWeek" placeholder="Mon to Sat: 5:30 AM – 11:00 PM"></div>
+        <div><label>Sunday line</label><input id="timeSun" placeholder="Sun: 7:00 AM – 9:00 PM"></div>
+        <div class="full"><button class="btn btn-y btn-sm" type="submit">Save Timings</button></div>
+        <p style="color:var(--muted);font-size:.85rem">Leave both blank to go back to the default timings.</p>
+      </form>
+    </div>
+  </section>
+
+  <section id="sec-wa" style="display:none">
+    <div class="a-card">
+      <h3>WhatsApp Blast: draft once, send to any member</h3>
+      <form class="a-form" id="waForm">
+        <div class="full"><label>Message draft</label><textarea id="waText" placeholder="Hi! IRONPULSE Gym here. This weekend we are running free body-composition checks for all members. Book your slot by replying here."></textarea></div>
+      </form>
+      <div class="a-form" style="margin-top:16px">
+        <div><label>Member name</label><input id="waName" placeholder="Name"></div>
+        <div><label>WhatsApp number</label><input id="waPhone" placeholder="10-digit number"></div>
+        <div class="full"><button class="mini-btn" id="waAdd" type="button">+ Add to List</button></div>
+      </div>
+    </div>
+    <div class="a-card"><h3>Member List</h3><div id="waList"></div></div>
+  </section>
+
+  <section id="sec-data" style="display:none">
+    <div class="a-card">
+      <h3>Export &amp; Reset</h3>
+      <button class="mini-btn" id="expBtn" type="button">⬇ Export all data (JSON)</button>
+      <button class="mini-btn red" id="resetBtn" type="button" style="margin-left:10px">Reset everything</button>
+      <p style="color:var(--muted);font-size:.85rem;margin-top:14px">Demo data lives in this browser only. Export before resetting.</p>
+    </div>
+  </section>
+</main>
+</div>
+<div class="toast" id="toast">Saved</div>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

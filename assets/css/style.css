@@ -244,3 +244,6 @@ footer{background:#030303;border-top:1px solid var(--border)}
   .foot-grid{grid-template-columns:1fr}
   .topbar .tb-group.hide-m{display:none}
 }
+
+/* announcement banner (demo admin) */
+.promo-bar{background:var(--yellow);color:#0a0a0a;text-align:center;padding:9px 14px;font-weight:600;font-size:.88rem}
