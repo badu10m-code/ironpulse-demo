@@ -63,17 +63,25 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) form.addEventListener('submit', e => {
     e.preventDefault();
     const f = new FormData(form);
+    const ref = 'IP-' + Date.now().toString(36).toUpperCase().slice(-6);
+    const b = { ref, name: f.get('name'), phone: f.get('phone'), goal: f.get('goal'), time: f.get('time'), date: new Date().toLocaleString('en-IN') };
     try {
       const D = ipLoad();
       D.bookings = D.bookings || [];
-      D.bookings.unshift({ name: f.get('name'), phone: f.get('phone'), goal: f.get('goal'), time: f.get('time'), date: new Date().toLocaleString('en-IN') });
+      D.bookings.unshift(b);
       ipSave(D);
+      const mine = JSON.parse(localStorage.getItem('ironpulse_my_bookings') || '[]');
+      mine.unshift(b);
+      localStorage.setItem('ironpulse_my_bookings', JSON.stringify(mine));
+      renderCart();
     } catch(err) {}
     form.style.display = 'none';
     const ok = document.createElement('div');
-    ok.className = 'form-success';
-    ok.innerHTML = '<b>Request received.</b> Thanks ' + f.get('name') + ', your free trial request is logged. Our team will call you on ' + f.get('phone') + ' to confirm your slot.';
+    ok.className = 'book-congrats';
+    ok.innerHTML = '<div class="bc-check">\u2713</div><h3>Congratulations, ' + b.name + '!</h3><p>Your free trial session is booked. Our team will call you on ' + b.phone + ' to confirm your slot.</p><div class="bc-details"><span><b>Booking ID</b>' + ref + '</span><span><b>Goal</b>' + b.goal + '</span><span><b>Preferred Time</b>' + b.time + '</span></div><button class="btn btn-y btn-sm" id="bcView" type="button">View My Booking</button><small>You can see this booking any time from the My Booking button on every page.</small>';
     form.parentNode.appendChild(ok);
+    ok.querySelector('#bcView').addEventListener('click', openCart);
+    ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
   // BMI calculator
@@ -126,4 +134,34 @@ document.addEventListener('DOMContentLoaded', () => {
       g.innerHTML = D.testimonials.map((t, i) => `<div class="tst-card rv in${' d'+(i%3)}"><span class="stars">${'\u2605'.repeat(t.stars||5)}${'\u2606'.repeat(5-(t.stars||5))}</span><p>${t.text}</p><div class="tst-who"><div class="av">${(t.name||'M').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div><div><b>${t.name}</b><small>${t.tag||'Member'}</small></div></div></div>`).join('');
     });
   }
+
+  // my-booking cart panel (injected on every page)
+  const wrap = document.createElement('div');
+  wrap.innerHTML = '<button class="cart-float" aria-label="My bookings"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16v4a2 2 0 000 4v4H4v-4a2 2 0 000-4V7z"/><path d="M13 7v12" stroke-dasharray="2 3"/></svg><span class="cart-badge" hidden>0</span></button><div class="cart-backdrop"></div><aside class="cart-drawer"><div class="cart-head"><h3>My Booking</h3><button class="cart-close" aria-label="Close">\u00d7</button></div><div class="cart-items"></div></aside>';
+  document.body.appendChild(wrap);
+  const back = wrap.querySelector('.cart-backdrop'), drawer = wrap.querySelector('.cart-drawer'), btn = wrap.querySelector('.cart-float'), badge = wrap.querySelector('.cart-badge'), items = wrap.querySelector('.cart-items');
+  function openCart() { drawer.classList.add('open'); back.classList.add('show'); renderCart(); }
+  function closeCart() { drawer.classList.remove('open'); back.classList.remove('show'); }
+  btn.addEventListener('click', openCart);
+  wrap.querySelector('.cart-close').addEventListener('click', closeCart);
+  back.addEventListener('click', closeCart);
+  window.renderCart = function() {
+    let mine = [];
+    try { mine = JSON.parse(localStorage.getItem('ironpulse_my_bookings') || '[]'); } catch(e) {}
+    badge.hidden = mine.length === 0;
+    badge.textContent = mine.length;
+    items.innerHTML = mine.length ? mine.map(b =>
+      '<div class="cart-item"><div class="ci-top"><span class="ci-ref">' + b.ref + '</span><span class="ci-status">Confirmed</span></div><b>' + b.name + '</b><div class="ci-rows"><span>Goal: ' + b.goal + '</span><span>Preferred time: ' + b.time + '</span><span>Booked on: ' + b.date + '</span></div><button class="ci-cancel" data-ref="' + b.ref + '" type="button">Cancel Booking</button></div>').join('') : '<p class="cart-empty">No bookings yet.<br>Book a free trial and it will show up here.</p>';
+    items.querySelectorAll('.ci-cancel').forEach(x => x.addEventListener('click', () => {
+      if (!confirm('Cancel booking ' + x.dataset.ref + '?')) return;
+      try {
+        localStorage.setItem('ironpulse_my_bookings', JSON.stringify(mine.filter(m => m.ref !== x.dataset.ref)));
+        const D = ipLoad();
+        D.bookings = (D.bookings || []).filter(m => m.ref !== x.dataset.ref);
+        ipSave(D);
+      } catch(err) {}
+      renderCart();
+    }));
+  };
+  renderCart();
 });
