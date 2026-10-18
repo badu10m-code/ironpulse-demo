@@ -17,6 +17,7 @@
     <button data-sec="dash" class="on">📊 Dashboard</button>
     <button data-sec="bookings">📋 Trial Bookings</button>
     <button data-sec="tst">💬 Testimonials</button>
+    <button data-sec="offers">🏷 Offers</button>
     <button data-sec="banner">📣 Announcement</button>
     <button data-sec="timings">🕐 Timings</button>
     <button data-sec="wa">✆ WhatsApp Blast</button>
@@ -60,6 +61,19 @@
       </form>
     </div>
     <div class="a-card"><h3>Custom Testimonials (used when at least one exists)</h3><div id="tstList"></div></div>
+  </section>
+
+  <section id="sec-offers" style="display:none">
+    <div class="a-card">
+      <h3>Add Offer (shows as a "Running Offers" section on the homepage)</h3>
+      <form class="a-form" id="offerForm">
+        <div><label>Badge *</label><input id="offBadge" required placeholder="e.g. 20% OFF"></div>
+        <div><label>Title *</label><input id="offTitle" required placeholder="e.g. Dussehra Membership Deal"></div>
+        <div class="full"><label>Details *</label><textarea id="offText" required placeholder="e.g. 20% off on all quarterly and half-yearly memberships till 20 October."></textarea></div>
+        <div class="full"><button class="btn btn-y btn-sm" type="submit">Save Offer</button></div>
+      </form>
+    </div>
+    <div class="a-card"><h3>All Offers</h3><div id="offList"></div></div>
   </section>
 
   <section id="sec-banner" style="display:none">

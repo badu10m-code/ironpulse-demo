@@ -69,8 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
       D.bookings.unshift({ name: f.get('name'), phone: f.get('phone'), goal: f.get('goal'), time: f.get('time'), date: new Date().toLocaleString('en-IN') });
       ipSave(D);
     } catch(err) {}
-    const msg = `Hi IRONPULSE Gym! I want to book a free trial.%0AName: ${f.get('name')}%0APhone: ${f.get('phone')}%0AGoal: ${f.get('goal')}%0APreferred time: ${f.get('time')}`;
-    window.open(`https://wa.me/919242158621?text=${msg.replace(/ /g, '%20')}`, '_blank');
+    form.style.display = 'none';
+    const ok = document.createElement('div');
+    ok.className = 'form-success';
+    ok.innerHTML = '<b>Request received.</b> Thanks ' + f.get('name') + ', your free trial request is logged. Our team will call you on ' + f.get('phone') + ' to confirm your slot.';
+    form.parentNode.appendChild(ok);
   });
 
   // BMI calculator
@@ -109,6 +112,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (D.timings && D.timings.week) document.querySelectorAll('.foot-contact li span').forEach(el => {
     if (el.innerHTML.includes('Mon\u2013Sat')) el.innerHTML = D.timings.week + '<br>' + (D.timings.sun || '');
   });
+  if (D.offers && D.offers.filter(o => o.on !== false).length) {
+    const list = D.offers.filter(o => o.on !== false);
+    const sec = document.createElement('section');
+    sec.className = 'sec offers-sec';
+    sec.innerHTML = '<div class="sec-head center rv"><span class="kicker">Limited Period</span><h2>Running Offers</h2><p>Enrol this month and lock the founding-member rate.</p></div><div class="offers-grid">' + list.map(o => `<div class="offer-card rv"><span class="offer-badge">${o.badge}</span><h3>${o.title}</h3><p>${o.text}</p><a class="btn btn-y btn-sm" href="contact.html">Claim Offer</a></div>`).join('') + '</div>';
+    const foot = document.querySelector('footer') || document.querySelector('.foot');
+    if (foot) foot.parentNode.insertBefore(sec, foot);
+  }
   const grids = Array.from(document.querySelectorAll('.tst-grid')).filter(g => g.querySelector('.stars'));
   if (D.testimonials && D.testimonials.length && grids.length) {
     grids.forEach(g => {

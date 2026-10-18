@@ -247,3 +247,14 @@ footer{background:#030303;border-top:1px solid var(--border)}
 
 /* announcement banner (demo admin) */
 .promo-bar{background:var(--yellow);color:#0a0a0a;text-align:center;padding:9px 14px;font-weight:600;font-size:.88rem}
+
+/* form success + admin offers on site */
+.form-success{background:rgba(255,216,53,.1);border:1px solid rgba(255,216,53,.4);border-radius:12px;padding:22px;color:var(--text);font-size:.95rem}
+.form-success b{color:var(--yellow);display:block;margin-bottom:6px;font-family:var(--font-display)}
+.offers-sec{background:#0a0a0c}
+.offers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;max-width:1240px;margin:0 auto;padding:0 24px}
+.offer-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:30px;position:relative;overflow:hidden}
+.offer-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--yellow)}
+.offer-badge{display:inline-block;background:var(--yellow);color:#000;font-family:var(--font-display);font-weight:700;font-size:.8rem;padding:5px 12px;border-radius:20px;margin-bottom:14px}
+.offer-card h3{font-family:var(--font-display);font-size:1.15rem;margin-bottom:10px}
+.offer-card p{color:var(--muted);font-size:.92rem;margin-bottom:18px}
